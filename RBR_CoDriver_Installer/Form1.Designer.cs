@@ -51,14 +51,16 @@
             codriverName = new Label();
             label1 = new Label();
             linkLabel1 = new LinkLabel();
+            panelOverlay = new Panel();
             ((System.ComponentModel.ISupportInitialize)pbCodriverImage).BeginInit();
             ((System.ComponentModel.ISupportInitialize)scaleImage).BeginInit();
+            panelOverlay.SuspendLayout();
             SuspendLayout();
             // 
             // lblStatus
             // 
             lblStatus.AutoSize = true;
-            lblStatus.Location = new Point(12, 9);
+            lblStatus.Location = new Point(12, 14);
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(70, 15);
             lblStatus.TabIndex = 0;
@@ -124,9 +126,9 @@
             // 
             // pbStatus
             // 
-            pbStatus.Location = new Point(645, 9);
+            pbStatus.Location = new Point(249, 347);
             pbStatus.Name = "pbStatus";
-            pbStatus.Size = new Size(150, 30);
+            pbStatus.Size = new Size(308, 27);
             pbStatus.Style = ProgressBarStyle.Marquee;
             pbStatus.TabIndex = 6;
             pbStatus.Visible = false;
@@ -135,7 +137,7 @@
             // 
             lblLoadingText.AutoSize = true;
             lblLoadingText.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblLoadingText.Location = new Point(517, 14);
+            lblLoadingText.Location = new Point(344, 305);
             lblLoadingText.Name = "lblLoadingText";
             lblLoadingText.Size = new Size(122, 25);
             lblLoadingText.TabIndex = 7;
@@ -214,12 +216,12 @@
             // 
             // scaleLabel
             // 
-            scaleLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            scaleLabel.Location = new Point(531, 557);
+            scaleLabel.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            scaleLabel.Location = new Point(530, 548);
             scaleLabel.Name = "scaleLabel";
             scaleLabel.Size = new Size(175, 23);
             scaleLabel.TabIndex = 14;
-            scaleLabel.Text = "Scale";
+            scaleLabel.Text = "Imagem de Janne Laahanen";
             scaleLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // codriverName
@@ -250,12 +252,25 @@
             linkLabel1.TabIndex = 17;
             linkLabel1.TabStop = true;
             linkLabel1.Text = "Clicar aqui";
+            linkLabel1.LinkClicked += previewURL_LinkClicked;
+            // 
+            // panelOverlay
+            // 
+            panelOverlay.BackColor = SystemColors.ControlDark;
+            panelOverlay.Controls.Add(pbStatus);
+            panelOverlay.Controls.Add(lblLoadingText);
+            panelOverlay.Location = new Point(440, 14);
+            panelOverlay.Name = "panelOverlay";
+            panelOverlay.Size = new Size(226, 129);
+            panelOverlay.TabIndex = 18;
+            panelOverlay.Visible = false;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(794, 775);
+            ClientSize = new Size(734, 775);
+            Controls.Add(panelOverlay);
             Controls.Add(linkLabel1);
             Controls.Add(label1);
             Controls.Add(codriverName);
@@ -266,8 +281,6 @@
             Controls.Add(instalCodriver);
             Controls.Add(selectCodriver);
             Controls.Add(comboBoxCodrivers);
-            Controls.Add(lblLoadingText);
-            Controls.Add(pbStatus);
             Controls.Add(btnRestoreCopilot);
             Controls.Add(btnCreateBackup);
             Controls.Add(lblBackupManagement);
@@ -282,6 +295,8 @@
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)pbCodriverImage).EndInit();
             ((System.ComponentModel.ISupportInitialize)scaleImage).EndInit();
+            panelOverlay.ResumeLayout(false);
+            panelOverlay.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -310,5 +325,6 @@
         private Label codriverName;
         private Label label1;
         private LinkLabel linkLabel1;
+        private Panel panelOverlay;
     }
 }

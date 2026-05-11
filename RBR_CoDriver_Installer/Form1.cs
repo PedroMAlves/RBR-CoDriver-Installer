@@ -4,6 +4,7 @@ using SharpCompress.Archives.SevenZip;
 using SharpCompress.Common;
 using System.Net;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 namespace RBR_CoDriver_Installer
@@ -48,7 +49,6 @@ namespace RBR_CoDriver_Installer
                 {
                     lblDescription.Text = lista[0].description;
                     codriverName.Text = lista[0].codriver_name;
-                    scaleLabel.Text = lista[0].scale_name;
                     linkLabel1.Tag = lista[0].preview_url;
                     if (!string.IsNullOrEmpty(lista[0].image_url))
                     {
@@ -297,11 +297,7 @@ namespace RBR_CoDriver_Installer
                     return;
                 }
             }
-
-            pbStatus.Visible = true;
-            lblLoadingText.Visible = true;
-            lblLoadingText.Text = "A criar backup...";
-            btnCreateBackup.Enabled = false;
+            ShowOverlay("A criar backup...");
 
             try
             {
@@ -341,8 +337,7 @@ namespace RBR_CoDriver_Installer
             }
             finally
             {
-                pbStatus.Visible = false;
-                lblLoadingText.Visible = false;
+                HideOverlay();
                 setHasBackups();
                 setBackupButtons();
             }
@@ -379,10 +374,7 @@ namespace RBR_CoDriver_Installer
                 return;
             }
 
-            pbStatus.Visible = true;
-            lblLoadingText.Visible = true;
-            lblLoadingText.Text = "A restaurar...";
-            btnRestoreCopilot.Enabled = false;
+            ShowOverlay("A restaurar...");
 
             try
             {
@@ -403,8 +395,7 @@ namespace RBR_CoDriver_Installer
             }
             finally
             {
-                pbStatus.Visible = false;
-                lblLoadingText.Visible = false;
+                HideOverlay();
                 setHasBackups();
                 setBackupButtons();
             }
@@ -477,10 +468,7 @@ namespace RBR_CoDriver_Installer
 
             try
             {
-                instalCodriver.Enabled = false;
-                lblLoadingText.Text = "A descarregar...";
-                lblLoadingText.Visible = true;
-                pbStatus.Visible = true;
+                ShowOverlay("A descarregar...");
 
                 using (var client = new WebClient())
                 {
@@ -513,9 +501,7 @@ namespace RBR_CoDriver_Installer
             }
             finally
             {
-                instalCodriver.Enabled = true;
-                lblLoadingText.Visible = false;
-                pbStatus.Visible = false;
+                HideOverlay();
             }
         }
 
@@ -526,6 +512,8 @@ namespace RBR_CoDriver_Installer
             if (selectedCodriver != null)
             {
                 lblDescription.Text = selectedCodriver.description;
+                codriverName.Text = selectedCodriver.codriver_name;
+                linkLabel1.Tag = selectedCodriver.preview_url;
                 if (!string.IsNullOrEmpty(selectedCodriver.image_url))
                 {
                     pbCodriverImage.LoadAsync(selectedCodriver.image_url);
@@ -534,12 +522,63 @@ namespace RBR_CoDriver_Installer
                 {
                     pbCodriverImage.Image = null; //
                 }
+                if (!string.IsNullOrEmpty(selectedCodriver.scale_image))
+                {
+                    object obj = Properties.Resources.ResourceManager.GetObject(selectedCodriver.scale_image);
+                    scaleImage.Image = (Image)obj;
+                }
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void previewURL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (linkLabel1.Tag == null) return;
+
+            string url = linkLabel1.Tag.ToString();
+
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = url,
+                    UseShellExecute = true
+                });
+
+                linkLabel1.LinkVisited = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Não foi possível abrir o link: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ShowOverlay(string mensagem)
+        {
+            panelOverlay.Size = this.ClientSize;
+            panelOverlay.Location = new Point(0, 0);
+            panelOverlay.BringToFront();
+
+            lblLoadingText.Visible = true;
+            lblLoadingText.Text = mensagem;
+            pbStatus.Visible = true;
+
+            panelOverlay.Visible = true;
+
+            // Opcional: Centrar os controlos dentro do overlay
+            lblLoadingText.Left = (panelOverlay.Width - lblLoadingText.Width) / 2;
+            pbStatus.Left = (panelOverlay.Width - pbStatus.Width) / 2;
+        }
+
+        private void HideOverlay()
+        {
+            panelOverlay.Visible = false;
+            lblLoadingText.Visible = false;
+            pbStatus.Visible = false;
         }
     }
 }  

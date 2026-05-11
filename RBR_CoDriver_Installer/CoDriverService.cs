@@ -11,6 +11,11 @@ namespace RBR_CoDriver_Installer
         public string url { get; set; }
         public string description { get; set; }
         public string image_url { get; set; }
+        public string codriver_name { get; set; }
+        public string preview_url { get; set; }
+        public string scale_name { get; set; }
+        public string scale_image { get; set; }
+
     }
 
     public class CodriverService

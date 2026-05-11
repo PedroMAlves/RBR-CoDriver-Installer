@@ -1,8 +1,9 @@
 using Microsoft.Win32;
+using SharpCompress.Archives;
 using SharpCompress.Archives.SevenZip;
 using SharpCompress.Common;
 using System.Net;
-using SharpCompress.Archives;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 
 namespace RBR_CoDriver_Installer
@@ -46,6 +47,9 @@ namespace RBR_CoDriver_Installer
                 if (lista.Count > 0)
                 {
                     lblDescription.Text = lista[0].description;
+                    codriverName.Text = lista[0].codriver_name;
+                    scaleLabel.Text = lista[0].scale_name;
+                    linkLabel1.Tag = lista[0].preview_url;
                     if (!string.IsNullOrEmpty(lista[0].image_url))
                     {
                         pbCodriverImage.LoadAsync(lista[0].image_url);
@@ -53,6 +57,12 @@ namespace RBR_CoDriver_Installer
                     else
                     {
                         pbCodriverImage.Image = null; //
+                    }
+
+                    if (!string.IsNullOrEmpty(lista[0].scale_image))
+                    {
+                        object obj = Properties.Resources.ResourceManager.GetObject(lista[0].scale_image);
+                        scaleImage.Image = (Image)obj;
                     }
                 }
             }
@@ -525,6 +535,11 @@ namespace RBR_CoDriver_Installer
                     pbCodriverImage.Image = null; //
                 }
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }  

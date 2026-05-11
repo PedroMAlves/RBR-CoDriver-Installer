@@ -1,0 +1,36 @@
+## [ Visual Studio ]
+.vs/
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## [ .NET / C# ]
+*.exe
+*.dll
+*.pdb
+*.orig
+*.log
+
+## [ Python (Se ainda tiveres os scripts de voz no mesmo repo) ]
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.env
+
+## [ Windows ]
+Thumbs.db
+desktop.ini
+
+## [ User specific files ]
+*.user
+*.userosscache
+*.sln.docstates
+
+## [ Inno Setup (Arquivos de saída do instalador) ]
+Output/

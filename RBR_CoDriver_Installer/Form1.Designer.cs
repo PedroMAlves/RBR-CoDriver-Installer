@@ -46,7 +46,6 @@
             imageList1 = new ImageList(components);
             imageList2 = new ImageList(components);
             pbCodriverImage = new PictureBox();
-            progressBar1 = new ProgressBar();
             ((System.ComponentModel.ISupportInitialize)pbCodriverImage).BeginInit();
             SuspendLayout();
             // 
@@ -197,19 +196,11 @@
             pbCodriverImage.TabIndex = 12;
             pbCodriverImage.TabStop = false;
             // 
-            // progressBar1
-            // 
-            progressBar1.Location = new Point(517, 45);
-            progressBar1.Name = "progressBar1";
-            progressBar1.Size = new Size(278, 36);
-            progressBar1.TabIndex = 13;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(progressBar1);
             Controls.Add(pbCodriverImage);
             Controls.Add(lblDescription);
             Controls.Add(instalCodriver);
@@ -252,6 +243,5 @@
         private ImageList imageList1;
         private ImageList imageList2;
         private PictureBox pbCodriverImage;
-        private ProgressBar progressBar1;
     }
 }

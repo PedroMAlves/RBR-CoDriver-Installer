@@ -2,7 +2,6 @@ using Microsoft.Win32;
 using SharpCompress.Archives.SevenZip;
 using SharpCompress.Common;
 using System.Net;
-using System.Data;
 using SharpCompress.Archives;
 
 
@@ -278,28 +277,57 @@ namespace RBR_CoDriver_Installer
                 return;
             }
 
+            // Check if backups already exist
+            if (Directory.Exists(audioBackup) && Directory.Exists(pluginsBackup))
+            {
+                var result = MessageBox.Show(this, "Os backups já existem. Deseja sobrescrever?", "Backups Existentes",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result != DialogResult.Yes)
+                {
+                    return;
+                }
+            }
+
             pbStatus.Visible = true;
             lblLoadingText.Visible = true;
+            lblLoadingText.Text = "A criar backup...";
             btnCreateBackup.Enabled = false;
 
             try
             {
                 await Task.Run(() =>
                 {
-                    if (Directory.Exists(audioPath))
+                    try
                     {
-                        CopyDirectory(audioPath, audioBackup);
+                        if (Directory.Exists(audioPath))
+                        {
+                            if (Directory.Exists(audioBackup))
+                            {
+                                Directory.Delete(audioBackup, true);
+                            }
+                            CopyDirectory(audioPath, audioBackup);
+                        }
+
+                        if (Directory.Exists(pluginsPath))
+                        {
+                            if (Directory.Exists(pluginsBackup))
+                            {
+                                Directory.Delete(pluginsBackup, true);
+                            }
+                            CopyDirectory(pluginsPath, pluginsBackup);
+                        }
                     }
-                    if (Directory.Exists(pluginsPath))
+                    catch (Exception ex)
                     {
-                        CopyDirectory(pluginsPath, pluginsBackup);
+                        throw new Exception($"Erro durante a cópia: {ex.Message}", ex);
                     }
                 });
+
                 MessageBox.Show(this, "Backup criado com sucesso.", "Backup", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, "Erro ao criar backup: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, $"Erro ao criar backup: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -333,15 +361,22 @@ namespace RBR_CoDriver_Installer
                 return;
             }
 
+            var confirm = MessageBox.Show(this, "Tem a certeza que deseja restaurar? A versão atual será substituída.",
+                "Confirmar Restauração", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (confirm != DialogResult.Yes)
+            {
+                return;
+            }
+
             pbStatus.Visible = true;
             lblLoadingText.Visible = true;
+            lblLoadingText.Text = "A restaurar...";
             btnRestoreCopilot.Enabled = false;
-
-            bool restored = false;
 
             try
             {
-                restored = await Task.Run(() => restoreBackups());
+                bool restored = await Task.Run(() => restoreBackups());
 
                 if (restored)
                 {
@@ -354,7 +389,7 @@ namespace RBR_CoDriver_Installer
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, "Erro ao restaurar backup: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, $"Erro ao restaurar backup: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -369,24 +404,38 @@ namespace RBR_CoDriver_Installer
         {
             bool restored = false;
 
-            if (Directory.Exists(audioBackup))
+            try
             {
-                if (Directory.Exists(audioPath))
+                if (Directory.Exists(audioBackup))
                 {
-                    Directory.Delete(audioPath, true);
+                    if (Directory.Exists(audioPath))
+                    {
+                        Directory.Delete(audioPath, true);
+                    }
+                    Directory.Move(audioBackup, audioPath);
+                    restored = true;
                 }
-                Directory.Move(audioBackup, audioPath);
-                restored = true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao restaurar Audio: {ex.Message}", ex);
             }
 
-            if (Directory.Exists(pluginsBackup))
+            try
             {
-                if (Directory.Exists(pluginsPath))
+                if (Directory.Exists(pluginsBackup))
                 {
-                    Directory.Delete(pluginsPath, true);
+                    if (Directory.Exists(pluginsPath))
+                    {
+                        Directory.Delete(pluginsPath, true);
+                    }
+                    Directory.Move(pluginsBackup, pluginsPath);
+                    restored = true;
                 }
-                Directory.Move(pluginsBackup, pluginsPath);
-                restored = true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao restaurar Plugins: {ex.Message}", ex);
             }
 
             return restored;
@@ -421,14 +470,10 @@ namespace RBR_CoDriver_Installer
                 instalCodriver.Enabled = false;
                 lblLoadingText.Text = "A descarregar...";
                 lblLoadingText.Visible = true;
+                pbStatus.Visible = true;
 
                 using (var client = new WebClient())
                 {
-                    // Update progress bar during download
-                    client.DownloadProgressChanged += (s, e) => {
-                        progressBar1.Value = e.ProgressPercentage;
-                    };
-
                     await client.DownloadFileTaskAsync(new Uri(downloadUrl), tempFile);
                 }
 
@@ -460,8 +505,7 @@ namespace RBR_CoDriver_Installer
             {
                 instalCodriver.Enabled = true;
                 lblLoadingText.Visible = false;
-                progressBar1.Value = 0;
-                if (File.Exists(tempFile)) File.Delete(tempFile); // Delete temp file after installation
+                pbStatus.Visible = false;
             }
         }
 

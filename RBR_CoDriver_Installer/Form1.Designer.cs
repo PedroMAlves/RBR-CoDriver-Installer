@@ -32,6 +32,9 @@
             btnSelectPath = new Button();
             btnChangePath = new Button();
             folderBrowserDialog = new FolderBrowserDialog();
+            lblBackupManagement = new Label();
+            btnCreateBackup = new Button();
+            btnRestoreCopilot = new Button();
             SuspendLayout();
             // 
             // lblStatus
@@ -49,7 +52,7 @@
             btnSelectPath.Name = "btnSelectPath";
             btnSelectPath.Size = new Size(150, 23);
             btnSelectPath.TabIndex = 1;
-            btnSelectPath.Text = "Seleciona a pasta de instalação";
+            btnSelectPath.Text = "Selecionar pasta";
             btnSelectPath.UseVisualStyleBackColor = true;
             btnSelectPath.Visible = false;
             btnSelectPath.Click += btnSelectPath_Click;
@@ -60,10 +63,42 @@
             btnChangePath.Name = "btnChangePath";
             btnChangePath.Size = new Size(150, 23);
             btnChangePath.TabIndex = 2;
-            btnChangePath.Text = "Alterar Pasta";
+            btnChangePath.Text = "Alterar pasta";
             btnChangePath.UseVisualStyleBackColor = true;
             btnChangePath.Visible = false;
             btnChangePath.Click += btnChangePath_Click;
+            // 
+            // lblBackupManagement
+            // 
+            lblBackupManagement.AutoSize = true;
+            lblBackupManagement.Location = new Point(12, 80);
+            lblBackupManagement.Name = "lblBackupManagement";
+            lblBackupManagement.Size = new Size(267, 15);
+            lblBackupManagement.TabIndex = 3;
+            lblBackupManagement.Text = "Gestão do back do co-piloto original";
+            lblBackupManagement.Visible = false;
+            // 
+            // btnCreateBackup
+            // 
+            btnCreateBackup.Location = new Point(12, 110);
+            btnCreateBackup.Name = "btnCreateBackup";
+            btnCreateBackup.Size = new Size(150, 23);
+            btnCreateBackup.TabIndex = 4;
+            btnCreateBackup.Text = "Criar Backup";
+            btnCreateBackup.UseVisualStyleBackColor = true;
+            btnCreateBackup.Visible = false;
+            btnCreateBackup.Click += btnCreateBackup_Click;
+            // 
+            // btnRestoreCopilot
+            // 
+            btnRestoreCopilot.Location = new Point(175, 110);
+            btnRestoreCopilot.Name = "btnRestoreCopilot";
+            btnRestoreCopilot.Size = new Size(150, 23);
+            btnRestoreCopilot.TabIndex = 5;
+            btnRestoreCopilot.Text = "Restaurar co-piloto";
+            btnRestoreCopilot.UseVisualStyleBackColor = true;
+            btnRestoreCopilot.Visible = false;
+            btnRestoreCopilot.Click += btnRestoreCopilot_Click;
             // 
             // folderBrowserDialog
             // 
@@ -74,6 +109,9 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnRestoreCopilot);
+            Controls.Add(btnCreateBackup);
+            Controls.Add(lblBackupManagement);
             Controls.Add(btnChangePath);
             Controls.Add(btnSelectPath);
             Controls.Add(lblStatus);
@@ -87,6 +125,9 @@
         private Label lblStatus;
         private Button btnSelectPath;
         private Button btnChangePath;
+        private Label lblBackupManagement;
+        private Button btnCreateBackup;
+        private Button btnRestoreCopilot;
         private FolderBrowserDialog folderBrowserDialog;
 
         #endregion

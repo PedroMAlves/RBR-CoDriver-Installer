@@ -1,0 +1,34 @@
+[
+    {
+        "id": "pt_duarte_v1",
+        "name": "Duarte Numeric A V3 PT-PT (Versão Lomba)",
+        "description": "Mod de co-piloto Duarte Numeric A V3 PT-PT (Versão Lomba)",
+        "version": "1.0.0",
+        "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v0.2/Duarte.Numeric.A.V3.PT-PT.Versao.Lomba.7z",
+        "size_mb": 1.46
+    },
+    {
+        "id": "pt_duarte_v2",
+        "name": "Duarte Numeric A V3 PT-PT (Versão Topo)",
+        "description": "Mod de co-piloto Duarte Numeric A V3 PT-PT (Versão Topo)",
+        "version": "1.0.0",
+        "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v0.2/Duarte.Numeric.A.V3.PT-PT.Versao.Topo.7z",
+        "size_mb": 1.46
+    },
+    {
+        "id": "pt_raquel_v1",
+        "name": "Raquel Numeric A V3 PT-PT (Versão Lomba)",
+        "description": "Mod de co-piloto Raquel Numeric A V3 PT-PT (Versão Lomba)",
+        "version": "1.0.0",
+        "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v0.2/Raquel.Numeric.A.V3.PT-PT.Versao.Lomba.7z",
+        "size_mb": 1.78
+    },
+    {
+        "id": "pt_raquel_v2",
+        "name": "Raquel Numeric A V3 PT-PT (Versão Topo)",
+        "description": "Mod de co-piloto Raquel Numeric A V3 PT-PT (Versão Topo)",
+        "version": "1.0.0",
+        "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v0.2/Raquel.Numeric.A.V3.PT-PT.Versao.Topo.7z",
+        "size_mb": 1.77
+    }
+]

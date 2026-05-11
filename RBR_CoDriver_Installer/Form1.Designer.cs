@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             lblStatus = new Label();
             btnSelectPath = new Button();
             btnChangePath = new Button();
@@ -35,6 +36,8 @@
             lblBackupManagement = new Label();
             btnCreateBackup = new Button();
             btnRestoreCopilot = new Button();
+            pbStatus = new ProgressBar();
+            lblLoadingText = new Label();
             SuspendLayout();
             // 
             // lblStatus
@@ -42,7 +45,7 @@
             lblStatus.AutoSize = true;
             lblStatus.Location = new Point(12, 9);
             lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(67, 15);
+            lblStatus.Size = new Size(70, 15);
             lblStatus.TabIndex = 0;
             lblStatus.Text = "A detectar...";
             // 
@@ -68,14 +71,18 @@
             btnChangePath.Visible = false;
             btnChangePath.Click += btnChangePath_Click;
             // 
+            // folderBrowserDialog
+            // 
+            folderBrowserDialog.Description = "Seleciona a pasta de instalação do Richard Burns Rally RSF";
+            // 
             // lblBackupManagement
             // 
             lblBackupManagement.AutoSize = true;
             lblBackupManagement.Location = new Point(12, 80);
             lblBackupManagement.Name = "lblBackupManagement";
-            lblBackupManagement.Size = new Size(267, 15);
+            lblBackupManagement.Size = new Size(214, 15);
             lblBackupManagement.TabIndex = 3;
-            lblBackupManagement.Text = "Gestão do back do co-piloto original";
+            lblBackupManagement.Text = "Gestão do backup do co-piloto original";
             lblBackupManagement.Visible = false;
             // 
             // btnCreateBackup
@@ -100,23 +107,43 @@
             btnRestoreCopilot.Visible = false;
             btnRestoreCopilot.Click += btnRestoreCopilot_Click;
             // 
-            // folderBrowserDialog
+            // pbStatus
             // 
-            folderBrowserDialog.Description = "Seleciona a pasta de instalação do Richard Burns Rally RSF";
+            pbStatus.Location = new Point(645, 9);
+            pbStatus.Name = "pbStatus";
+            pbStatus.Size = new Size(150, 30);
+            pbStatus.Style = ProgressBarStyle.Marquee;
+            pbStatus.TabIndex = 6;
+            pbStatus.Visible = false;
+            // 
+            // lblLoadingText
+            // 
+            lblLoadingText.AutoSize = true;
+            lblLoadingText.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblLoadingText.Location = new Point(517, 14);
+            lblLoadingText.Name = "lblLoadingText";
+            lblLoadingText.Size = new Size(122, 25);
+            lblLoadingText.TabIndex = 7;
+            lblLoadingText.Text = "A processar...";
+            lblLoadingText.Visible = false;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(lblLoadingText);
+            Controls.Add(pbStatus);
             Controls.Add(btnRestoreCopilot);
             Controls.Add(btnCreateBackup);
             Controls.Add(lblBackupManagement);
             Controls.Add(btnChangePath);
             Controls.Add(btnSelectPath);
             Controls.Add(lblStatus);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             RightToLeft = RightToLeft.No;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Instalador de Co-Pilotos RBR RSF";
             ResumeLayout(false);
             PerformLayout();
@@ -131,5 +158,8 @@
         private FolderBrowserDialog folderBrowserDialog;
 
         #endregion
+
+        private ProgressBar pbStatus;
+        private Label lblLoadingText;
     }
 }

@@ -5,6 +5,11 @@ namespace RBR_CoDriver_Installer
     public partial class Form1 : Form
     {
         private string rbrInstallPath = string.Empty;
+        private string audioPath = string.Empty;
+        private string pluginsPath = string.Empty;
+        private string audioBackup = string.Empty;
+        private string pluginsBackup = string.Empty;
+        private bool hasBackup = false;
 
         public Form1()
         {
@@ -17,7 +22,7 @@ namespace RBR_CoDriver_Installer
             string foundPath = FindRBRPath();
             if (!string.IsNullOrEmpty(foundPath))
             {
-                rbrInstallPath = foundPath;
+                initializeState(foundPath);
                 ShowPathFound();
             }
             else
@@ -30,7 +35,7 @@ namespace RBR_CoDriver_Installer
         {
             try
             {
-                // Procura na Registry no caminho específico do RallySimFans RBR
+                // Search Registry for installation path (64-bit)
                 using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Rallysimfans RBR"))
                 {
                     if (key != null)
@@ -49,10 +54,10 @@ namespace RBR_CoDriver_Installer
             }
             catch
             {
-                // Se falhar, tenta o método de busca por ficheiro
+                // If failure, try folder search as fallback
             }
 
-            // Fallback: Procura por RSF_Launcher.exe em qualquer local do sistema
+            // Fallback: Search for RSF_Launcher.exe in the system
             try
             {
                 string launcherPath = FindRSFLauncherInDrives();
@@ -63,15 +68,15 @@ namespace RBR_CoDriver_Installer
             }
             catch
             {
-                // Ignora erros durante a procura
+                // Ignore errors during search
             }
 
-            return null; // Não encontrado
+            return null;
         }
 
         private string FindRSFLauncherInDrives()
         {
-            // Procura em todas as unidades disponíveis
+            // Search all available drives for rsf_launcher\RSF_Launcher.exe
             DriveInfo[] drives = DriveInfo.GetDrives();
 
             foreach (DriveInfo drive in drives)
@@ -88,7 +93,7 @@ namespace RBR_CoDriver_Installer
                     }
                     catch
                     {
-                        // Continua procurando noutras unidades
+                        // Keep searching other drives if access is denied or any error occurs
                     }
                 }
             }
@@ -100,10 +105,10 @@ namespace RBR_CoDriver_Installer
         {
             try
             {
-                // Procura recursivamente por rsf_launcher\RSF_Launcher.exe
+                // Searches recursively rsf_launcher\RSF_Launcher.exe
                 DirectoryInfo rootDir = new DirectoryInfo(rootPath);
 
-                // Limita a profundidade para evitar erros de acesso profundo
+                // Limits depth to avoid long searches, adjust as needed
                 return SearchDirectoryRecursive(rootDir, 0, 5);
             }
             catch
@@ -121,7 +126,7 @@ namespace RBR_CoDriver_Installer
 
             try
             {
-                // Procura por rsf_launcher pasta neste nível
+                // Searches for rsf_launcher folder in the current directory
                 DirectoryInfo rsfLauncherDir = directory.GetDirectories("rsf_launcher", SearchOption.TopDirectoryOnly).FirstOrDefault();
 
                 if (rsfLauncherDir != null)
@@ -129,12 +134,12 @@ namespace RBR_CoDriver_Installer
                     FileInfo launcherExe = rsfLauncherDir.GetFiles("RSF_Launcher.exe", SearchOption.TopDirectoryOnly).FirstOrDefault();
                     if (launcherExe != null)
                     {
-                        // Retorna a pasta pai de rsf_launcher (a raiz da instalação do RBR)
+                        // Return the parent directory of rsf_launcher, which should be the RBR installation folder
                         return rsfLauncherDir.Parent.FullName;
                     }
                 }
 
-                // Procura recursivamente nas subpastas
+                // Search recursively in subdirectories
                 DirectoryInfo[] subdirectories = directory.GetDirectories();
                 foreach (DirectoryInfo subdir in subdirectories)
                 {
@@ -148,13 +153,13 @@ namespace RBR_CoDriver_Installer
                     }
                     catch
                     {
-                        // Continua procurando
+                        // Continue searching
                     }
                 }
             }
             catch
             {
-                // Ignora erros de acesso
+                // Ignore access errors and continue searching
             }
 
             return null;
@@ -162,20 +167,50 @@ namespace RBR_CoDriver_Installer
 
         private void btnSelectPath_Click(object sender, EventArgs e)
         {
-            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            if (folderBrowserDialog.ShowDialog(this) == DialogResult.OK)
             {
-                rbrInstallPath = folderBrowserDialog.SelectedPath;
+                initializeState(folderBrowserDialog.SelectedPath);
                 ShowPathFound();
             }
         }
 
         private void btnChangePath_Click(object sender, EventArgs e)
         {
-            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            if (folderBrowserDialog.ShowDialog(this) == DialogResult.OK)
             {
-                rbrInstallPath = folderBrowserDialog.SelectedPath;
+                initializeState(folderBrowserDialog.SelectedPath);
                 ShowPathFound();
             }
+        }
+
+        private void initializeState(string installationFolder)
+        {
+            setPaths(installationFolder);
+            setHasBackups();
+            setBackupButtons();
+        }
+
+        private void setPaths(string installationFolder)
+        {
+            rbrInstallPath = installationFolder;
+            audioPath = Path.Combine(installationFolder, "Audio");
+            pluginsPath = Path.Combine(installationFolder, "Plugins");
+            audioBackup = Path.Combine(installationFolder, "Audio - backup CDI");
+            pluginsBackup = Path.Combine(installationFolder, "Plugins - backup CDI");
+        }
+
+        private void setHasBackups()
+        {
+            if (!string.IsNullOrEmpty(rbrInstallPath))
+            {
+                hasBackup = Directory.Exists(audioBackup) || Directory.Exists(pluginsBackup);
+            }
+        }
+
+        private void setBackupButtons()
+        {
+            btnCreateBackup.Enabled = !hasBackup;
+            btnRestoreCopilot.Enabled = hasBackup;
         }
 
         private void ShowPathFound()
@@ -198,14 +233,125 @@ namespace RBR_CoDriver_Installer
             btnRestoreCopilot.Visible = false;
         }
 
-        private void btnCreateBackup_Click(object sender, EventArgs e)
+        private async void btnCreateBackup_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Funcionalidade de criar backup a ser implementada.", "Criar Backup", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (string.IsNullOrEmpty(rbrInstallPath))
+            {
+                MessageBox.Show(this, "Caminho de instalação não definido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            pbStatus.Visible = true;
+            lblLoadingText.Visible = true;
+            btnCreateBackup.Enabled = false;
+
+            try
+            {
+                await Task.Run(() =>
+                {
+                    if (Directory.Exists(audioPath))
+                    {
+                        CopyDirectory(audioPath, audioBackup);
+                    }
+                    if (Directory.Exists(pluginsPath))
+                    {
+                        CopyDirectory(pluginsPath, pluginsBackup);
+                    }
+                });
+                MessageBox.Show(this, "Backup criado com sucesso.", "Backup", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, "Erro ao criar backup: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                pbStatus.Visible = false;
+                lblLoadingText.Visible = false;
+                setHasBackups();
+                setBackupButtons();
+            }
         }
 
-        private void btnRestoreCopilot_Click(object sender, EventArgs e)
+        private void CopyDirectory(string sourceDir, string destDir)
         {
-            MessageBox.Show("Funcionalidade de restaurar co-piloto a ser implementada.", "Restaurar Co-Piloto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Directory.CreateDirectory(destDir);
+            foreach (string file in Directory.GetFiles(sourceDir))
+            {
+                string destFile = Path.Combine(destDir, Path.GetFileName(file));
+                File.Copy(file, destFile, true);
+            }
+            foreach (string subDir in Directory.GetDirectories(sourceDir))
+            {
+                string destSubDir = Path.Combine(destDir, Path.GetFileName(subDir));
+                CopyDirectory(subDir, destSubDir);
+            }
+        }
+
+        private async void btnRestoreCopilot_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(rbrInstallPath))
+            {
+                MessageBox.Show(this, "Caminho de instalação não definido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            pbStatus.Visible = true;
+            lblLoadingText.Visible = true;
+            btnRestoreCopilot.Enabled = false;
+
+            bool restored = false;
+
+            try
+            {
+               restored = await Task.Run(() => restoreBackups());
+
+                if (restored)
+                {
+                    MessageBox.Show(this, "Backup restaurado com sucesso.", "Restauração", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show(this, "Nenhum backup encontrado para restaurar.", "Restauração", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, "Erro ao restaurar backup: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                pbStatus.Visible = false;
+                lblLoadingText.Visible = false;
+                setHasBackups();
+                setBackupButtons();
+            }
+        }
+
+        private bool restoreBackups() {
+            bool restored = false;
+
+            if (Directory.Exists(audioBackup))
+            {
+                if (Directory.Exists(audioPath))
+                {
+                    Directory.Delete(audioPath, true);
+                }
+                Directory.Move(audioBackup, audioPath);
+                restored = true;
+            }
+
+            if (Directory.Exists(pluginsBackup))
+            {
+                if (Directory.Exists(pluginsPath))
+                {
+                    Directory.Delete(pluginsPath, true);
+                }
+                Directory.Move(pluginsBackup, pluginsPath);
+                restored = true;
+            }
+
+            return restored;
         }
     }
 }  

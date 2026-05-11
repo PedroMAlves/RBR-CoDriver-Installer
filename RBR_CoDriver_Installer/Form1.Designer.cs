@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             lblStatus = new Label();
             btnSelectPath = new Button();
@@ -38,6 +39,15 @@
             btnRestoreCopilot = new Button();
             pbStatus = new ProgressBar();
             lblLoadingText = new Label();
+            comboBoxCodrivers = new ComboBox();
+            selectCodriver = new Label();
+            instalCodriver = new Button();
+            lblDescription = new Label();
+            imageList1 = new ImageList(components);
+            imageList2 = new ImageList(components);
+            pbCodriverImage = new PictureBox();
+            progressBar1 = new ProgressBar();
+            ((System.ComponentModel.ISupportInitialize)pbCodriverImage).BeginInit();
             SuspendLayout();
             // 
             // lblStatus
@@ -127,11 +137,84 @@
             lblLoadingText.Text = "A processar...";
             lblLoadingText.Visible = false;
             // 
+            // comboBoxCodrivers
+            // 
+            comboBoxCodrivers.FormattingEnabled = true;
+            comboBoxCodrivers.Location = new Point(12, 183);
+            comboBoxCodrivers.Name = "comboBoxCodrivers";
+            comboBoxCodrivers.Size = new Size(313, 23);
+            comboBoxCodrivers.TabIndex = 8;
+            comboBoxCodrivers.SelectedIndexChanged += comboBoxCodrivers_SelectedIndexChanged;
+            // 
+            // selectCodriver
+            // 
+            selectCodriver.AutoSize = true;
+            selectCodriver.Location = new Point(12, 156);
+            selectCodriver.Name = "selectCodriver";
+            selectCodriver.Size = new Size(228, 15);
+            selectCodriver.TabIndex = 9;
+            selectCodriver.Text = "Escolhe o co-piloto que pretendes instalar";
+            // 
+            // instalCodriver
+            // 
+            instalCodriver.Location = new Point(331, 183);
+            instalCodriver.Name = "instalCodriver";
+            instalCodriver.Size = new Size(132, 23);
+            instalCodriver.TabIndex = 10;
+            instalCodriver.Text = "Instalar Co-piloto";
+            instalCodriver.UseVisualStyleBackColor = true;
+            instalCodriver.Click += buttonInstall_Click;
+            // 
+            // lblDescription
+            // 
+            lblDescription.BackColor = SystemColors.Control;
+            lblDescription.ForeColor = SystemColors.ControlText;
+            lblDescription.Location = new Point(12, 219);
+            lblDescription.Name = "lblDescription";
+            lblDescription.Size = new Size(451, 222);
+            lblDescription.TabIndex = 11;
+            lblDescription.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // imageList1
+            // 
+            imageList1.ColorDepth = ColorDepth.Depth32Bit;
+            imageList1.ImageSize = new Size(16, 16);
+            imageList1.TransparentColor = Color.Transparent;
+            // 
+            // imageList2
+            // 
+            imageList2.ColorDepth = ColorDepth.Depth32Bit;
+            imageList2.ImageSize = new Size(16, 16);
+            imageList2.TransparentColor = Color.Transparent;
+            // 
+            // pbCodriverImage
+            // 
+            pbCodriverImage.BorderStyle = BorderStyle.FixedSingle;
+            pbCodriverImage.Location = new Point(532, 183);
+            pbCodriverImage.Name = "pbCodriverImage";
+            pbCodriverImage.Size = new Size(225, 225);
+            pbCodriverImage.SizeMode = PictureBoxSizeMode.Zoom;
+            pbCodriverImage.TabIndex = 12;
+            pbCodriverImage.TabStop = false;
+            // 
+            // progressBar1
+            // 
+            progressBar1.Location = new Point(517, 45);
+            progressBar1.Name = "progressBar1";
+            progressBar1.Size = new Size(278, 36);
+            progressBar1.TabIndex = 13;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(progressBar1);
+            Controls.Add(pbCodriverImage);
+            Controls.Add(lblDescription);
+            Controls.Add(instalCodriver);
+            Controls.Add(selectCodriver);
+            Controls.Add(comboBoxCodrivers);
             Controls.Add(lblLoadingText);
             Controls.Add(pbStatus);
             Controls.Add(btnRestoreCopilot);
@@ -145,6 +228,7 @@
             RightToLeft = RightToLeft.No;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Instalador de Co-Pilotos RBR RSF";
+            ((System.ComponentModel.ISupportInitialize)pbCodriverImage).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -161,5 +245,13 @@
 
         private ProgressBar pbStatus;
         private Label lblLoadingText;
+        private ComboBox comboBoxCodrivers;
+        private Label selectCodriver;
+        private Button instalCodriver;
+        private Label lblDescription;
+        private ImageList imageList1;
+        private ImageList imageList2;
+        private PictureBox pbCodriverImage;
+        private ProgressBar progressBar1;
     }
 }

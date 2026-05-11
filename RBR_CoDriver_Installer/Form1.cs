@@ -1,4 +1,10 @@
 using Microsoft.Win32;
+using SharpCompress.Archives.SevenZip;
+using SharpCompress.Common;
+using System.Net;
+using System.Data;
+using SharpCompress.Archives;
+
 
 namespace RBR_CoDriver_Installer
 {
@@ -16,8 +22,9 @@ namespace RBR_CoDriver_Installer
             InitializeComponent();
         }
 
-        protected override void OnLoad(EventArgs e)
+        protected override async void OnLoad(EventArgs e)
         {
+            comboBoxCodrivers.Enabled = true;
             base.OnLoad(e);
             string foundPath = FindRBRPath();
             if (!string.IsNullOrEmpty(foundPath))
@@ -28,6 +35,36 @@ namespace RBR_CoDriver_Installer
             else
             {
                 ShowPathNotFound();
+            }
+            try
+            {
+                var service = new CodriverService();
+                List<Codriver> lista = await service.GetAvailableCodriversAsync();
+
+                comboBoxCodrivers.DataSource = lista;
+                comboBoxCodrivers.DisplayMember = "name";
+                comboBoxCodrivers.ValueMember = "url";
+                if (lista.Count > 0)
+                {
+                    lblDescription.Text = lista[0].description;
+                    if (!string.IsNullOrEmpty(lista[0].image_url))
+                    {
+                        pbCodriverImage.LoadAsync(lista[0].image_url);
+                    }
+                    else
+                    {
+                        pbCodriverImage.Image = null; //
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, $"Erro ao carregar co-pilotos: {ex.Message}",
+                        "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            finally
+            {
+                comboBoxCodrivers.Enabled = true;
             }
         }
 
@@ -304,7 +341,7 @@ namespace RBR_CoDriver_Installer
 
             try
             {
-               restored = await Task.Run(() => restoreBackups());
+                restored = await Task.Run(() => restoreBackups());
 
                 if (restored)
                 {
@@ -328,7 +365,8 @@ namespace RBR_CoDriver_Installer
             }
         }
 
-        private bool restoreBackups() {
+        private bool restoreBackups()
+        {
             bool restored = false;
 
             if (Directory.Exists(audioBackup))
@@ -352,6 +390,97 @@ namespace RBR_CoDriver_Installer
             }
 
             return restored;
+        }
+
+        private async void buttonInstall_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(rbrInstallPath))
+            {
+                MessageBox.Show(this, "Caminho de instalação não definido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var selected = (Codriver)comboBoxCodrivers.SelectedItem;
+            if (selected == null) return;
+
+            var confirm = MessageBox.Show($"Desejas instalar {selected.name}?", "Confirmar",
+                                         MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (confirm == DialogResult.Yes)
+            {
+                await IniciarInstalacao(selected.url, rbrInstallPath);
+            }
+        }
+
+        private async Task IniciarInstalacao(string downloadUrl, string rbrPath)
+        {
+            string tempFile = Path.Combine(Path.GetTempPath(), "codriver_temp.7z");
+
+            try
+            {
+                instalCodriver.Enabled = false;
+                lblLoadingText.Text = "A descarregar...";
+                lblLoadingText.Visible = true;
+
+                using (var client = new WebClient())
+                {
+                    // Update progress bar during download
+                    client.DownloadProgressChanged += (s, e) => {
+                        progressBar1.Value = e.ProgressPercentage;
+                    };
+
+                    await client.DownloadFileTaskAsync(new Uri(downloadUrl), tempFile);
+                }
+
+                lblLoadingText.Text = "A extrair ficheiros...";
+
+                // Extract file
+                await Task.Run(() =>
+                {
+                    using (var archive = SevenZipArchive.OpenArchive(tempFile))
+                    {
+                        foreach (var entry in archive.Entries.Where(entry => !entry.IsDirectory))
+                        {
+                            entry.WriteToDirectory(rbrPath, new ExtractionOptions
+                            {
+                                ExtractFullPath = true,
+                                Overwrite = true
+                            });
+                        }
+                    }
+                });
+
+                MessageBox.Show("Co-piloto instalado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro na instalação: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                instalCodriver.Enabled = true;
+                lblLoadingText.Visible = false;
+                progressBar1.Value = 0;
+                if (File.Exists(tempFile)) File.Delete(tempFile); // Delete temp file after installation
+            }
+        }
+
+        private void comboBoxCodrivers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedCodriver = (Codriver)comboBoxCodrivers.SelectedItem;
+
+            if (selectedCodriver != null)
+            {
+                lblDescription.Text = selectedCodriver.description;
+                if (!string.IsNullOrEmpty(selectedCodriver.image_url))
+                {
+                    pbCodriverImage.LoadAsync(selectedCodriver.image_url);
+                }
+                else
+                {
+                    pbCodriverImage.Image = null; //
+                }
+            }
         }
     }
 }  

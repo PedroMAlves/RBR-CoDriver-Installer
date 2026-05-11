@@ -9,7 +9,7 @@
         "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v0.2/Duarte.Numeric.A.V3.PT-PT.Versao.Lomba.7z",
         "preview_url": "https://www.youtube.com/watch?v=ij_mOwAvkpc",
         "scale_name": "Numeric A",
-        "scale_image": "numeric_A.png",
+        "scale_image": "numeric_A",
         "size_mb": 1.46
     },
     {
@@ -22,7 +22,7 @@
         "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v0.2/Duarte.Numeric.A.V3.PT-PT.Versao.Topo.7z",
         "preview_url": "https://www.youtube.com/watch?v=ij_mOwAvkpc",
         "scale_name": "Numeric A",
-        "scale_image": "numeric_A.png",
+        "scale_image": "numeric_A",
         "size_mb": 1.46
     },
     {
@@ -35,7 +35,7 @@
         "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v0.2/Raquel.Numeric.A.V3.PT-PT.Versao.Lomba.7z",
         "preview_url": "https://www.youtube.com/watch?v=1JzXLWmFz_c",
         "scale_name": "Numeric A",
-        "scale_image": "numeric_A.png",
+        "scale_image": "numeric_A",
         "size_mb": 1.78
     },
     {
@@ -48,7 +48,7 @@
         "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v0.2/Raquel.Numeric.A.V3.PT-PT.Versao.Topo.7z",
         "preview_url": "https://www.youtube.com/watch?v=1JzXLWmFz_c",
         "scale_name": "Numeric A",
-        "scale_image": "numeric_A.png",
+        "scale_image": "numeric_A",
         "size_mb": 1.77
     }
 ]

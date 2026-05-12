@@ -57,6 +57,12 @@
             panel2 = new Panel();
             lblAppVersion = new Label();
             AzorModsLogo = new PictureBox();
+            lblLuppisV3 = new Label();
+            lblLuppisSite = new Label();
+            linkLuppisSite = new LinkLabel();
+            btnBackupPN = new Button();
+            btnRestorePN = new Button();
+            btnLuppis = new Button();
             ((System.ComponentModel.ISupportInitialize)pbCodriverImage).BeginInit();
             ((System.ComponentModel.ISupportInitialize)scaleImage).BeginInit();
             panelOverlay.SuspendLayout();
@@ -105,9 +111,9 @@
             lblBackupManagement.AutoSize = true;
             lblBackupManagement.Location = new Point(12, 80);
             lblBackupManagement.Name = "lblBackupManagement";
-            lblBackupManagement.Size = new Size(214, 15);
+            lblBackupManagement.Size = new Size(245, 15);
             lblBackupManagement.TabIndex = 3;
-            lblBackupManagement.Text = "Gestão do backup do co-piloto original";
+            lblBackupManagement.Text = "Gestão do backup do co-piloto original/atual";
             lblBackupManagement.Visible = false;
             // 
             // btnCreateBackup
@@ -116,14 +122,14 @@
             btnCreateBackup.Name = "btnCreateBackup";
             btnCreateBackup.Size = new Size(150, 23);
             btnCreateBackup.TabIndex = 4;
-            btnCreateBackup.Text = "Criar Backup";
+            btnCreateBackup.Text = "Criar backup co-piloto";
             btnCreateBackup.UseVisualStyleBackColor = true;
             btnCreateBackup.Visible = false;
             btnCreateBackup.Click += btnCreateBackup_Click;
             // 
             // btnRestoreCopilot
             // 
-            btnRestoreCopilot.Location = new Point(175, 110);
+            btnRestoreCopilot.Location = new Point(168, 110);
             btnRestoreCopilot.Name = "btnRestoreCopilot";
             btnRestoreCopilot.Size = new Size(150, 23);
             btnRestoreCopilot.TabIndex = 5;
@@ -155,7 +161,7 @@
             // comboBoxCodrivers
             // 
             comboBoxCodrivers.FormattingEnabled = true;
-            comboBoxCodrivers.Location = new Point(12, 183);
+            comboBoxCodrivers.Location = new Point(12, 276);
             comboBoxCodrivers.Name = "comboBoxCodrivers";
             comboBoxCodrivers.Size = new Size(313, 23);
             comboBoxCodrivers.TabIndex = 8;
@@ -164,15 +170,15 @@
             // selectCodriver
             // 
             selectCodriver.AutoSize = true;
-            selectCodriver.Location = new Point(12, 156);
+            selectCodriver.Location = new Point(12, 249);
             selectCodriver.Name = "selectCodriver";
-            selectCodriver.Size = new Size(228, 15);
+            selectCodriver.Size = new Size(231, 15);
             selectCodriver.TabIndex = 9;
-            selectCodriver.Text = "Escolhe o co-piloto que pretendes instalar";
+            selectCodriver.Text = "Escolhe o co-piloto que pretendes instalar:";
             // 
             // instalCodriver
             // 
-            instalCodriver.Location = new Point(331, 183);
+            instalCodriver.Location = new Point(331, 276);
             instalCodriver.Name = "instalCodriver";
             instalCodriver.Size = new Size(132, 23);
             instalCodriver.TabIndex = 10;
@@ -184,7 +190,7 @@
             // 
             lblDescription.BackColor = SystemColors.Control;
             lblDescription.ForeColor = SystemColors.ControlText;
-            lblDescription.Location = new Point(15, 479);
+            lblDescription.Location = new Point(15, 572);
             lblDescription.Name = "lblDescription";
             lblDescription.Size = new Size(451, 188);
             lblDescription.TabIndex = 11;
@@ -205,7 +211,7 @@
             // pbCodriverImage
             // 
             pbCodriverImage.BorderStyle = BorderStyle.FixedSingle;
-            pbCodriverImage.Location = new Point(15, 223);
+            pbCodriverImage.Location = new Point(15, 316);
             pbCodriverImage.Name = "pbCodriverImage";
             pbCodriverImage.Size = new Size(225, 225);
             pbCodriverImage.SizeMode = PictureBoxSizeMode.Zoom;
@@ -215,7 +221,7 @@
             // scaleImage
             // 
             scaleImage.BorderStyle = BorderStyle.FixedSingle;
-            scaleImage.Location = new Point(517, 223);
+            scaleImage.Location = new Point(517, 316);
             scaleImage.Name = "scaleImage";
             scaleImage.Size = new Size(202, 322);
             scaleImage.SizeMode = PictureBoxSizeMode.Zoom;
@@ -225,17 +231,17 @@
             // scaleLabel
             // 
             scaleLabel.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            scaleLabel.Location = new Point(530, 548);
+            scaleLabel.Location = new Point(530, 641);
             scaleLabel.Name = "scaleLabel";
             scaleLabel.Size = new Size(175, 23);
             scaleLabel.TabIndex = 14;
-            scaleLabel.Text = "Imagem de Janne Laahanen";
+            scaleLabel.Text = "(Imagem de Janne Laahanen)";
             scaleLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // codriverName
             // 
             codriverName.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            codriverName.Location = new Point(256, 235);
+            codriverName.Location = new Point(256, 328);
             codriverName.Name = "codriverName";
             codriverName.Size = new Size(175, 15);
             codriverName.TabIndex = 15;
@@ -245,7 +251,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(256, 281);
+            label1.Location = new Point(256, 374);
             label1.Name = "label1";
             label1.Size = new Size(135, 15);
             label1.TabIndex = 16;
@@ -254,12 +260,12 @@
             // linkLabel1
             // 
             linkLabel1.AutoSize = true;
-            linkLabel1.Location = new Point(262, 305);
+            linkLabel1.Location = new Point(262, 398);
             linkLabel1.Name = "linkLabel1";
-            linkLabel1.Size = new Size(63, 15);
+            linkLabel1.Size = new Size(59, 15);
             linkLabel1.TabIndex = 17;
             linkLabel1.TabStop = true;
-            linkLabel1.Text = "Clicar aqui";
+            linkLabel1.Text = "Clica aqui";
             linkLabel1.LinkClicked += previewURL_LinkClicked;
             // 
             // panelOverlay
@@ -285,7 +291,7 @@
             panel1.Controls.Add(lblAppVersion);
             panel1.Controls.Add(AzorModsLogo);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 726);
+            panel1.Location = new Point(0, 774);
             panel1.Name = "panel1";
             panel1.Size = new Size(734, 100);
             panel1.TabIndex = 19;
@@ -318,11 +324,76 @@
             AzorModsLogo.TabIndex = 0;
             AzorModsLogo.TabStop = false;
             // 
+            // lblLuppisV3
+            // 
+            lblLuppisV3.AutoSize = true;
+            lblLuppisV3.Location = new Point(9, 155);
+            lblLuppisV3.Name = "lblLuppisV3";
+            lblLuppisV3.Size = new Size(492, 15);
+            lblLuppisV3.TabIndex = 20;
+            lblLuppisV3.Text = "ATENÇÃO: Estas mods de co-piloto são apenas compatíveis com o pack de notas Luppis V3.";
+            // 
+            // lblLuppisSite
+            // 
+            lblLuppisSite.AutoSize = true;
+            lblLuppisSite.Location = new Point(9, 172);
+            lblLuppisSite.Name = "lblLuppisSite";
+            lblLuppisSite.RightToLeft = RightToLeft.No;
+            lblLuppisSite.Size = new Size(222, 15);
+            lblLuppisSite.TabIndex = 21;
+            lblLuppisSite.Text = "Visita o site do criador para saberes mais:";
+            // 
+            // linkLuppisSite
+            // 
+            linkLuppisSite.AutoSize = true;
+            linkLuppisSite.Location = new Point(237, 170);
+            linkLuppisSite.Name = "linkLuppisSite";
+            linkLuppisSite.Size = new Size(59, 15);
+            linkLuppisSite.TabIndex = 22;
+            linkLuppisSite.TabStop = true;
+            linkLuppisSite.Text = "Clica aqui";
+            linkLuppisSite.LinkClicked += linkLuppisSite_LinkClicked;
+            // 
+            // btnBackupPN
+            // 
+            btnBackupPN.Location = new Point(12, 205);
+            btnBackupPN.Name = "btnBackupPN";
+            btnBackupPN.Size = new Size(173, 23);
+            btnBackupPN.TabIndex = 23;
+            btnBackupPN.Text = "Criar backup pacenotes";
+            btnBackupPN.UseVisualStyleBackColor = true;
+            btnBackupPN.Click += btnBackupPN_Click;
+            // 
+            // btnRestorePN
+            // 
+            btnRestorePN.Location = new Point(191, 205);
+            btnRestorePN.Name = "btnRestorePN";
+            btnRestorePN.Size = new Size(206, 23);
+            btnRestorePN.TabIndex = 24;
+            btnRestorePN.Text = "Restaurar backup pacenotes";
+            btnRestorePN.UseVisualStyleBackColor = true;
+            btnRestorePN.Click += btnRestorePN_Click;
+            // 
+            // btnLuppis
+            // 
+            btnLuppis.Location = new Point(403, 205);
+            btnLuppis.Name = "btnLuppis";
+            btnLuppis.Size = new Size(207, 23);
+            btnLuppis.TabIndex = 25;
+            btnLuppis.Text = "Instalar pack Luppis Pacenotes V3";
+            btnLuppis.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(734, 826);
+            ClientSize = new Size(734, 874);
+            Controls.Add(btnLuppis);
+            Controls.Add(btnRestorePN);
+            Controls.Add(btnBackupPN);
+            Controls.Add(linkLuppisSite);
+            Controls.Add(lblLuppisSite);
+            Controls.Add(lblLuppisV3);
             Controls.Add(panel1);
             Controls.Add(panelOverlay);
             Controls.Add(linkLabel1);
@@ -389,5 +460,11 @@
         private PictureBox AzorModsLogo;
         private Panel panel2;
         private Label lblAppVersion;
+        private Label lblLuppisV3;
+        private Label lblLuppisSite;
+        private LinkLabel linkLuppisSite;
+        private Button btnLuppis;
+        private Button btnRestorePN;
+        private Button btnBackupPN;
     }
 }

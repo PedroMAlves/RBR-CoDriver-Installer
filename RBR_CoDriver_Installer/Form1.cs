@@ -3,6 +3,7 @@ using SharpCompress.Archives;
 using SharpCompress.Archives.SevenZip;
 using SharpCompress.Common;
 using System.Net;
+using System.Security.Policy;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -17,6 +18,8 @@ namespace RBR_CoDriver_Installer
         private string audioBackup = string.Empty;
         private string pluginsBackup = string.Empty;
         private bool hasBackup = false;
+        private string pacenotesBackup = string.Empty;
+        private string pacenotesPath = string.Empty;
 
         public Form1()
         {
@@ -243,6 +246,8 @@ namespace RBR_CoDriver_Installer
             pluginsPath = Path.Combine(installationFolder, "Plugins", "Pacenote");
             audioBackup = Path.Combine(installationFolder, "Audio - backup CDI");
             pluginsBackup = Path.Combine(installationFolder, "Plugins", "Pacenote - backup CDI");
+            pacenotesPath = Path.Combine(installationFolder, "Plugins", "NGPCarMenu", "MyPacenotes");
+            pacenotesBackup = Path.Combine(installationFolder, "Plugins", "NGPCarMenu", "MyPacenotes - backup CDI");
         }
 
         private void setHasBackups()
@@ -367,7 +372,7 @@ namespace RBR_CoDriver_Installer
             }
 
             var confirm = MessageBox.Show(this, "Tem a certeza que deseja restaurar? A versão atual será substituída.",
-                "Confirmar Restauração", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                "Confirmar Recuperação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (confirm != DialogResult.Yes)
             {
@@ -378,15 +383,16 @@ namespace RBR_CoDriver_Installer
 
             try
             {
-                bool restored = await Task.Run(() => restoreBackups());
+                bool restored = await Task.Run(() => restoreBackups(audioPath, audioBackup));
+                restored = await Task.Run(() => restoreBackups(pluginsPath, pluginsBackup)) || restored;
 
                 if (restored)
                 {
-                    MessageBox.Show(this, "Backup restaurado com sucesso.", "Restauração", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(this, "Backup restaurado com sucesso.", "Recuperação", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show(this, "Nenhum backup encontrado para restaurar.", "Restauração", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(this, "Nenhum backup encontrado para restaurar.", "Recuperação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)
@@ -401,42 +407,25 @@ namespace RBR_CoDriver_Installer
             }
         }
 
-        private bool restoreBackups()
+        private bool restoreBackups(string originalPath, string backupPath)
         {
             bool restored = false;
 
             try
             {
-                if (Directory.Exists(audioBackup))
+                if (Directory.Exists(backupPath))
                 {
-                    if (Directory.Exists(audioPath))
+                    if (Directory.Exists(originalPath))
                     {
-                        Directory.Delete(audioPath, true);
+                        Directory.Delete(originalPath, true);
                     }
-                    Directory.Move(audioBackup, audioPath);
+                    Directory.Move(backupPath, originalPath);
                     restored = true;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao restaurar Audio: {ex.Message}", ex);
-            }
-
-            try
-            {
-                if (Directory.Exists(pluginsBackup))
-                {
-                    if (Directory.Exists(pluginsPath))
-                    {
-                        Directory.Delete(pluginsPath, true);
-                    }
-                    Directory.Move(pluginsBackup, pluginsPath);
-                    restored = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Erro ao restaurar Plugins: {ex.Message}", ex);
+                throw new Exception($"Erro ao restaurar backup: {ex.Message}", ex);
             }
 
             return restored;
@@ -579,6 +568,118 @@ namespace RBR_CoDriver_Installer
             panelOverlay.Visible = false;
             lblLoadingText.Visible = false;
             pbStatus.Visible = false;
+        }
+
+        private void linkLuppisSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "https://luppisrbr.blogspot.com/p/how-to-install-pacenotes.html",
+                    UseShellExecute = true
+                });
+
+                linkLuppisSite.LinkVisited = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Não foi possível abrir o link: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void btnBackupPN_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(rbrInstallPath))
+            {
+                MessageBox.Show(this, "Caminho de instalação não definido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Check if backups already exist
+            if (Directory.Exists(pacenotesBackup))
+            {
+                var result = MessageBox.Show(this, "O backup já existe. Deseja sobrescrever?", "Backup Existente",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result != DialogResult.Yes)
+                {
+                    return;
+                }
+            }
+            ShowOverlay("A criar backup...");
+
+            try
+            {
+                await Task.Run(() =>
+                {
+                    try
+                    {
+                        if (Directory.Exists(pacenotesPath))
+                        {
+                            if (Directory.Exists(pacenotesBackup))
+                            {
+                                Directory.Delete(pacenotesBackup, true);
+                            }
+                            CopyDirectory(pacenotesPath, pacenotesBackup);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception($"Erro durante a cópia: {ex.Message}", ex);
+                    }
+                });
+
+                MessageBox.Show(this, "Backup criado com sucesso.", "Backup", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, $"Erro ao criar backup: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                HideOverlay();
+            }
+        }
+
+        private async void btnRestorePN_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(rbrInstallPath))
+            {
+                MessageBox.Show(this, "Caminho de instalação não definido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var confirm = MessageBox.Show(this, "Tem a certeza que deseja restaurar? A versão atual será substituída.",
+                "Confirmar Recuperação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (confirm != DialogResult.Yes)
+            {
+                return;
+            }
+
+            ShowOverlay("A restaurar...");
+
+            try
+            {
+                bool restored = await Task.Run(() => restoreBackups(pacenotesPath, pacenotesBackup));
+
+                if (restored)
+                {
+                    MessageBox.Show(this, "Backup restaurado com sucesso.", "Recuperação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show(this, "Nenhum backup encontrado para restaurar.", "Recuperação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, $"Erro ao restaurar backup: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                HideOverlay();
+            }
         }
     }
 }  

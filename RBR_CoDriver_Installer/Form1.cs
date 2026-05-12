@@ -14,6 +14,7 @@ namespace RBR_CoDriver_Installer
         private string audioBackup = string.Empty;
         private string pluginsBackup = string.Empty;
         private bool hasBackup = false;
+        private bool hasPNBackup = false;
         private string pacenotesBackup = string.Empty;
         private string pacenotesPath = string.Empty;
         private Config config;
@@ -255,6 +256,7 @@ namespace RBR_CoDriver_Installer
             if (!string.IsNullOrEmpty(rbrInstallPath))
             {
                 hasBackup = Directory.Exists(audioBackup) || Directory.Exists(pluginsBackup);
+                hasPNBackup = Directory.Exists(pacenotesBackup);
             }
         }
 
@@ -262,6 +264,7 @@ namespace RBR_CoDriver_Installer
         {
             btnCreateBackup.Enabled = !hasBackup;
             btnRestoreCopilot.Enabled = hasBackup;
+            btnRestorePN.Enabled = hasPNBackup;
         }
 
         private void ShowPathFound()
@@ -638,6 +641,8 @@ namespace RBR_CoDriver_Installer
             finally
             {
                 HideOverlay();
+                setHasBackups();
+                setBackupButtons();
             }
         }
 
@@ -679,6 +684,8 @@ namespace RBR_CoDriver_Installer
             finally
             {
                 HideOverlay();
+                setHasBackups();
+                setBackupButtons();
             }
         }
 

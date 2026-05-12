@@ -1,3 +1,6 @@
 <Solution>
   <Project Path="RBR_CoDriver_Installer/RBR_CoDriver_Installer.csproj" />
+  <Project Path="RBR_CoDriver_Setup/RBR_CoDriver_Setup.vdproj" Type="Installer">
+    <Build />
+  </Project>
 </Solution>

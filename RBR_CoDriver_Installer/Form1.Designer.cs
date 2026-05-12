@@ -382,6 +382,7 @@
             btnLuppis.TabIndex = 25;
             btnLuppis.Text = "Instalar pack Luppis Pacenotes V3";
             btnLuppis.UseVisualStyleBackColor = true;
+            btnLuppis.Click += btnLuppis_Click;
             // 
             // Form1
             // 

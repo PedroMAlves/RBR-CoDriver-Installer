@@ -1,11 +1,7 @@
 using Microsoft.Win32;
 using SharpCompress.Archives;
-using SharpCompress.Archives.SevenZip;
 using SharpCompress.Common;
 using System.Net;
-using System.Security.Policy;
-using static System.ComponentModel.Design.ObjectSelectorEditor;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 namespace RBR_CoDriver_Installer
@@ -20,6 +16,7 @@ namespace RBR_CoDriver_Installer
         private bool hasBackup = false;
         private string pacenotesBackup = string.Empty;
         private string pacenotesPath = string.Empty;
+        private Config config;
 
         public Form1()
         {
@@ -78,6 +75,9 @@ namespace RBR_CoDriver_Installer
             {
                 comboBoxCodrivers.Enabled = true;
             }
+
+            var configService = new ConfigServices();
+            config = await configService.GetAvailableCodriversAsync();
         }
 
         public string FindRBRPath()
@@ -288,7 +288,7 @@ namespace RBR_CoDriver_Installer
         {
             if (string.IsNullOrEmpty(rbrInstallPath))
             {
-                MessageBox.Show(this, "Caminho de instalação não definido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                showInstallPathNotSet();
                 return;
             }
 
@@ -367,7 +367,7 @@ namespace RBR_CoDriver_Installer
         {
             if (string.IsNullOrEmpty(rbrInstallPath))
             {
-                MessageBox.Show(this, "Caminho de instalação não definido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                showInstallPathNotSet();
                 return;
             }
 
@@ -435,7 +435,7 @@ namespace RBR_CoDriver_Installer
         {
             if (string.IsNullOrEmpty(rbrInstallPath))
             {
-                MessageBox.Show(this, "Caminho de instalação não definido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                showInstallPathNotSet();
                 return;
             }
 
@@ -469,7 +469,7 @@ namespace RBR_CoDriver_Installer
                 // Extract file
                 await Task.Run(() =>
                 {
-                    using (var archive = SevenZipArchive.OpenArchive(tempFile))
+                    using (var archive = ArchiveFactory.OpenArchive(tempFile))
                     {
                         foreach (var entry in archive.Entries.Where(entry => !entry.IsDirectory))
                         {
@@ -482,7 +482,7 @@ namespace RBR_CoDriver_Installer
                     }
                 });
 
-                MessageBox.Show("Co-piloto instalado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Instalado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -576,7 +576,7 @@ namespace RBR_CoDriver_Installer
             {
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                 {
-                    FileName = "https://luppisrbr.blogspot.com/p/how-to-install-pacenotes.html",
+                    FileName = config.luppis_site_url,
                     UseShellExecute = true
                 });
 
@@ -592,7 +592,7 @@ namespace RBR_CoDriver_Installer
         {
             if (string.IsNullOrEmpty(rbrInstallPath))
             {
-                MessageBox.Show(this, "Caminho de instalação não definido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                showInstallPathNotSet();
                 return;
             }
 
@@ -645,7 +645,7 @@ namespace RBR_CoDriver_Installer
         {
             if (string.IsNullOrEmpty(rbrInstallPath))
             {
-                MessageBox.Show(this, "Caminho de instalação não definido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                showInstallPathNotSet();
                 return;
             }
 
@@ -681,5 +681,28 @@ namespace RBR_CoDriver_Installer
                 HideOverlay();
             }
         }
+
+        private async void btnLuppis_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(rbrInstallPath))
+            {
+                showInstallPathNotSet();
+                return;
+            }
+
+            var confirm = MessageBox.Show($"Desejas instalar o pack Luppis Pacenotes V3? Este processo demora um pouco. Por favor aguarda.", "Confirmar",
+                                         MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (confirm == DialogResult.Yes)
+            {
+                await IniciarInstalacao(config.luppis_pacenotes_url, rbrInstallPath);
+            }
+        }
+
+        private void showInstallPathNotSet()
+        {
+            MessageBox.Show(this, "Caminho de instalação não definido. Por favor, selecione a pasta de instalação do RBR RSF.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
     }
 }  

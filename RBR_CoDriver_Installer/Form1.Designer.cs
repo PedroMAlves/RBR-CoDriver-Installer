@@ -52,9 +52,17 @@
             label1 = new Label();
             linkLabel1 = new LinkLabel();
             panelOverlay = new Panel();
+            fileSystemWatcher1 = new FileSystemWatcher();
+            panel1 = new Panel();
+            panel2 = new Panel();
+            lblAppVersion = new Label();
+            AzorModsLogo = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pbCodriverImage).BeginInit();
             ((System.ComponentModel.ISupportInitialize)scaleImage).BeginInit();
             panelOverlay.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).BeginInit();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)AzorModsLogo).BeginInit();
             SuspendLayout();
             // 
             // lblStatus
@@ -178,7 +186,7 @@
             lblDescription.ForeColor = SystemColors.ControlText;
             lblDescription.Location = new Point(15, 479);
             lblDescription.Name = "lblDescription";
-            lblDescription.Size = new Size(451, 225);
+            lblDescription.Size = new Size(451, 188);
             lblDescription.TabIndex = 11;
             lblDescription.TextAlign = ContentAlignment.TopCenter;
             // 
@@ -256,7 +264,7 @@
             // 
             // panelOverlay
             // 
-            panelOverlay.BackColor = SystemColors.ControlDark;
+            panelOverlay.BackColor = Color.Transparent;
             panelOverlay.Controls.Add(pbStatus);
             panelOverlay.Controls.Add(lblLoadingText);
             panelOverlay.Location = new Point(440, 14);
@@ -265,11 +273,57 @@
             panelOverlay.TabIndex = 18;
             panelOverlay.Visible = false;
             // 
+            // fileSystemWatcher1
+            // 
+            fileSystemWatcher1.EnableRaisingEvents = true;
+            fileSystemWatcher1.SynchronizingObject = this;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = SystemColors.ControlLight;
+            panel1.Controls.Add(panel2);
+            panel1.Controls.Add(lblAppVersion);
+            panel1.Controls.Add(AzorModsLogo);
+            panel1.Dock = DockStyle.Bottom;
+            panel1.Location = new Point(0, 726);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(734, 100);
+            panel1.TabIndex = 19;
+            // 
+            // panel2
+            // 
+            panel2.BackColor = SystemColors.ActiveCaption;
+            panel2.Dock = DockStyle.Top;
+            panel2.Location = new Point(0, 0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(734, 1);
+            panel2.TabIndex = 2;
+            // 
+            // lblAppVersion
+            // 
+            lblAppVersion.AutoSize = true;
+            lblAppVersion.Location = new Point(62, 67);
+            lblAppVersion.Name = "lblAppVersion";
+            lblAppVersion.Size = new Size(239, 15);
+            lblAppVersion.TabIndex = 1;
+            lblAppVersion.Text = "Instalador de Co-Pilotos RBR RSF v1.0 - 2026";
+            // 
+            // AzorModsLogo
+            // 
+            AzorModsLogo.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            AzorModsLogo.Location = new Point(307, 3);
+            AzorModsLogo.Name = "AzorModsLogo";
+            AzorModsLogo.Size = new Size(425, 97);
+            AzorModsLogo.SizeMode = PictureBoxSizeMode.Zoom;
+            AzorModsLogo.TabIndex = 0;
+            AzorModsLogo.TabStop = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(734, 775);
+            ClientSize = new Size(734, 826);
+            Controls.Add(panel1);
             Controls.Add(panelOverlay);
             Controls.Add(linkLabel1);
             Controls.Add(label1);
@@ -297,6 +351,10 @@
             ((System.ComponentModel.ISupportInitialize)scaleImage).EndInit();
             panelOverlay.ResumeLayout(false);
             panelOverlay.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)fileSystemWatcher1).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)AzorModsLogo).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -326,5 +384,10 @@
         private Label label1;
         private LinkLabel linkLabel1;
         private Panel panelOverlay;
+        private FileSystemWatcher fileSystemWatcher1;
+        private Panel panel1;
+        private PictureBox AzorModsLogo;
+        private Panel panel2;
+        private Label lblAppVersion;
     }
 }

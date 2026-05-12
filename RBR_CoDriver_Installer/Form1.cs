@@ -240,9 +240,9 @@ namespace RBR_CoDriver_Installer
         {
             rbrInstallPath = installationFolder;
             audioPath = Path.Combine(installationFolder, "Audio");
-            pluginsPath = Path.Combine(installationFolder, "Plugins");
+            pluginsPath = Path.Combine(installationFolder, "Plugins", "Pacenote");
             audioBackup = Path.Combine(installationFolder, "Audio - backup CDI");
-            pluginsBackup = Path.Combine(installationFolder, "Plugins - backup CDI");
+            pluginsBackup = Path.Combine(installationFolder, "Plugins", "Pacenote - backup CDI");
         }
 
         private void setHasBackups()
@@ -532,7 +532,7 @@ namespace RBR_CoDriver_Installer
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            AzorModsLogo.Image = Properties.Resources.Banner_RBRazorMODS;
         }
 
         private void previewURL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

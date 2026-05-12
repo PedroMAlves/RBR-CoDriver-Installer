@@ -63,6 +63,16 @@ namespace RBR_CoDriver_Installer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Banner_RBRazorMODS {
+            get {
+                object obj = ResourceManager.GetObject("Banner_RBRazorMODS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap numeric_A {
             get {
                 object obj = ResourceManager.GetObject("numeric_A", resourceCulture);

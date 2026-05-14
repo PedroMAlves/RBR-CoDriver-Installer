@@ -24,6 +24,30 @@
         "size_mb": 1.46
     },
     {
+        "id": "pt_duarte_v3",
+        "name": "Duarte Numeric A V3 PT-PT (Versão Lomba - Sem ruído)",
+        "codriver_name": "Duarte TTS",
+        "description": "Voz masculina, versão de audio sem ruído. A escala utilizada é a numérica 6-1-HP, baseada no 'Numeric A Direction First' do Jannemod, em que 6 é um canto fácil e um 2 é um quadrado.\n\nEscala completa:\nA fundo, 6+, 6, 5+, 5, 4+, 4, 3+, 3, 2+, 2, 1+, 1, Gancho aberto, Gancho, Gancho fechado\n\nVersão Lomba - O termo Crest é traduzido como 'Lomba'\nTermos como 'Sumppu' e 'Camber' não foram traduzidos. O termo 'Dab' foi traduzido como 'Toca'",
+        "version": "1.0.0",
+        "image_url": "https://raw.githubusercontent.com/PedroMAlves/RBR-CoDriver-Installer/main/DuarteTTS.png",
+        "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v1.0/Duarte.Numeric.A.V3.PT-PT.Versao.Lomba.-.Sem.ruido.7z",
+        "preview_url": "https://www.youtube.com/watch?v=ij_mOwAvkpc",
+        "scale_image": "numeric_A",
+        "size_mb": 1.46
+    },
+    {
+        "id": "pt_duarte_v4",
+        "name": "Duarte Numeric A V3 PT-PT (Versão Topo - Sem ruído)",
+        "codriver_name": "Duarte TTS",
+        "description": "Voz masculina, versão de audio sem ruído. A escala utilizada é a numérica 6-1-HP, baseada no 'Numeric A Direction First' do Jannemod, em que 6 é um canto fácil e um 2 é um quadrado.\n\nEscala completa:\nA fundo, 6+, 6, 5+, 5, 4+, 4, 3+, 3, 2+, 2, 1+, 1, Gancho aberto, Gancho, Gancho fechado\n\nVersão Topo - O termo Crest é traduzido como 'Topo'\nTermos como 'Sumppu' e 'Camber' não foram traduzidos. O termo 'Dab' foi traduzido como 'Toca'",
+        "version": "1.0.0",
+        "image_url": "https://raw.githubusercontent.com/PedroMAlves/RBR-CoDriver-Installer/main/DuarteTTS.png",
+        "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v1.0/Duarte.Numeric.A.V3.PT-PT.Versao.Topo.-.Sem.ruido.7z",
+        "preview_url": "https://www.youtube.com/watch?v=ij_mOwAvkpc",
+        "scale_image": "numeric_A",
+        "size_mb": 1.46
+    },
+    {
         "id": "pt_raquel_v1",
         "name": "Raquel Numeric A V3 PT-PT (Versão Lomba)",
         "codriver_name": "Raquel TTS",

@@ -44,6 +44,17 @@
         "scale_image": "numeric_A",
     },
     {
+        "id": "pt_duarte_v5",
+        "name": "Duarte Numeric A Simple V3 PT-PT (Versão Lomba)",
+        "codriver_name": "Duarte TTS",
+        "description": "Voz masculina. A escala utilizada é a numérica 6-1-HP, baseada no 'Numeric A Simple Direction First' do Jannemod, em que 6 é um canto fácil e um 2 é um quadrado.\n\nEscala completa:\nA fundo, 6, 5, 4, 3, 2, 1, Gancho aberto, Gancho, Gancho fechado\n\nVersão Lomba - O termo Crest é traduzido como 'Lomba'\nTermos como 'Sumppu' e 'Camber' não foram traduzidos. O termo 'Dab' foi traduzido como 'Toca'",
+        "version": "1.0.0",
+        "image_url": "https://raw.githubusercontent.com/PedroMAlves/RBR-CoDriver-Installer/main/DuarteTTS.png",
+        "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v1.0/Duarte.Numeric.A.Simple.V3.PT-PT.Versao.Lomba.7z",
+        "preview_url": "https://www.youtube.com/watch?v=ij_mOwAvkpc",
+        "scale_image": "numeric_A_simple",
+    },
+    {
         "id": "pt_raquel_v1",
         "name": "Raquel Numeric A V3 PT-PT (Versão Lomba)",
         "codriver_name": "Raquel TTS",

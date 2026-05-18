@@ -14,14 +14,6 @@
 *.orig
 *.log
 
-## [ Python (Se ainda tiveres os scripts de voz no mesmo repo) ]
-__pycache__/
-*.py[cod]
-*$py.class
-venv/
-.venv/
-env/
-.env
 
 ## [ Windows ]
 Thumbs.db
@@ -31,6 +23,3 @@ desktop.ini
 *.user
 *.userosscache
 *.sln.docstates
-
-## [ Inno Setup (Arquivos de saída do instalador) ]
-Output/

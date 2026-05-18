@@ -8,7 +8,7 @@
         "image_url": "https://raw.githubusercontent.com/PedroMAlves/RBR-CoDriver-Installer/main/DuarteTTS.png",
         "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v1.0/Duarte.Numeric.A.V3.PT-PT.Versao.Lomba.7z",
         "preview_url": "https://www.youtube.com/watch?v=ij_mOwAvkpc",
-        "scale_image": "numeric_A",
+        "scale_image": "numeric_A"
     },
     {
         "id": "pt_duarte_v2",
@@ -19,7 +19,7 @@
         "image_url": "https://raw.githubusercontent.com/PedroMAlves/RBR-CoDriver-Installer/main/DuarteTTS.png",
         "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v1.0/Duarte.Numeric.A.V3.PT-PT.Versao.Topo.7z",
         "preview_url": "https://www.youtube.com/watch?v=ij_mOwAvkpc",
-        "scale_image": "numeric_A",
+        "scale_image": "numeric_A"
     },
     {
         "id": "pt_duarte_v3",
@@ -30,7 +30,7 @@
         "image_url": "https://raw.githubusercontent.com/PedroMAlves/RBR-CoDriver-Installer/main/DuarteTTS.png",
         "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v1.0/Duarte.Numeric.A.V3.PT-PT.Versao.Lomba.-.Pouco.ruido.7z",
         "preview_url": "https://www.youtube.com/watch?v=ij_mOwAvkpc",
-        "scale_image": "numeric_A",
+        "scale_image": "numeric_A"
     },
     {
         "id": "pt_duarte_v4",
@@ -41,7 +41,7 @@
         "image_url": "https://raw.githubusercontent.com/PedroMAlves/RBR-CoDriver-Installer/main/DuarteTTS.png",
         "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v1.0/Duarte.Numeric.A.V3.PT-PT.Versao.Topo.-.Pouco.ruido.7z",
         "preview_url": "https://www.youtube.com/watch?v=ij_mOwAvkpc",
-        "scale_image": "numeric_A",
+        "scale_image": "numeric_A"
     },
     {
         "id": "pt_duarte_v5",
@@ -52,7 +52,7 @@
         "image_url": "https://raw.githubusercontent.com/PedroMAlves/RBR-CoDriver-Installer/main/DuarteTTS.png",
         "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v1.0/Duarte.Numeric.A.Simple.V3.PT-PT.Versao.Lomba.7z",
         "preview_url": "https://www.youtube.com/watch?v=ij_mOwAvkpc",
-        "scale_image": "numeric_A_simple",
+        "scale_image": "numeric_A_simple"
     },
     {
         "id": "pt_duarte_v6",
@@ -63,7 +63,7 @@
         "image_url": "https://raw.githubusercontent.com/PedroMAlves/RBR-CoDriver-Installer/main/DuarteTTS.png",
         "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v1.0/Duarte.Numeric.C.V3.PT-PT.Versao.Lomba.7z",
         "preview_url": "https://www.youtube.com/watch?v=ij_mOwAvkpc",
-        "scale_image": "numeric_C",
+        "scale_image": "numeric_C"
     },
     {
         "id": "pt_duarte_v7",
@@ -74,7 +74,7 @@
         "image_url": "https://raw.githubusercontent.com/PedroMAlves/RBR-CoDriver-Installer/main/DuarteTTS.png",
         "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v1.0/Duarte.Numeric.C.Simple.V3.PT-PT.Versao.Lomba.7z",
         "preview_url": "https://www.youtube.com/watch?v=ij_mOwAvkpc",
-        "scale_image": "numeric_C_simple",
+        "scale_image": "numeric_C_simple"
     },
     {
         "id": "pt_raquel_v1",
@@ -85,7 +85,7 @@
         "image_url": "https://raw.githubusercontent.com/PedroMAlves/RBR-CoDriver-Installer/main/RaquelTTS.png",
         "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v1.0/Raquel.Numeric.A.V3.PT-PT.Versao.Lomba.7z",
         "preview_url": "https://www.youtube.com/watch?v=1JzXLWmFz_c",
-        "scale_image": "numeric_A",
+        "scale_image": "numeric_A"
     },
     {
         "id": "pt_raquel_v2",
@@ -96,7 +96,7 @@
         "image_url": "https://raw.githubusercontent.com/PedroMAlves/RBR-CoDriver-Installer/main/RaquelTTS.png",
         "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v1.0/Raquel.Numeric.A.V3.PT-PT.Versao.Topo.7z",
         "preview_url": "https://www.youtube.com/watch?v=1JzXLWmFz_c",
-        "scale_image": "numeric_A",
+        "scale_image": "numeric_A"
     },
     {
         "id": "pt_raquel_v3",
@@ -107,7 +107,7 @@
         "image_url": "https://raw.githubusercontent.com/PedroMAlves/RBR-CoDriver-Installer/main/RaquelTTS.png",
         "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v1.0/Raquel.Numeric.A.V3.PT-PT.Versao.Lomba.-.Pouco.ruido.7z",
         "preview_url": "https://www.youtube.com/watch?v=1JzXLWmFz_c",
-        "scale_image": "numeric_A",
+        "scale_image": "numeric_A"
     },
     {
         "id": "pt_raquel_v4",
@@ -118,6 +118,6 @@
         "image_url": "https://raw.githubusercontent.com/PedroMAlves/RBR-CoDriver-Installer/main/RaquelTTS.png",
         "url": "https://github.com/PedroMAlves/RBR-CoDriver-Installer/releases/download/v1.0/Raquel.Numeric.A.V3.PT-PT.Versao.Topo.-.Pouco.ruido.7z",
         "preview_url": "https://www.youtube.com/watch?v=1JzXLWmFz_c",
-        "scale_image": "numeric_A",
+        "scale_image": "numeric_A"
     }
 ]
